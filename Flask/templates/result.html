@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phishing URL Detection Result</title>
+    <style>body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+    
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    #result {
+        font-weight: bold;
+        margin-top: 20px;
+    }
+    
+    a {
+        display: block;
+        text-align: center;
+        margin-top: 30px;
+        color: #4CAF50;
+        text-decoration: none;
+    }
+    
+    a:hover {
+        text-decoration: underline;
+    }</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Phishing URL Detection Result</h1>
+        <div id="result">{{ prediction }}</div>
+        <a href="/">Check another URL</a>
+    </div>
+</body>
+</html>

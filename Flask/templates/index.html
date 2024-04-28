@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phishing URL Detection</title>
+    <style>body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+    
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    form {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+    
+    label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    
+    input[type="text"] {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 10px;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    
+    button[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    
+    button[type="submit"]:hover {
+        background-color: #3e8e41;
+    }
+    
+    #result {
+        font-weight: bold;
+        margin-top: 20px;
+    }</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Phishing URL Detection</h1>
+        <form id="url-form">
+            <label for="url-input">Enter URL:</label>
+            <input type="text" id="url-input" name="url-input" required>
+            <button type="submit">Check URL</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+
+    <script>
+        document.getElementById('url-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+            // Get the input URL from the form
+            const url = document.getElementById('url-input').value;
+    
+            // Send the input to the Flask app
+            sendInputToFlask(url);
+        });
+    
+        function sendInputToFlask(url) {
+            // Send a POST request to the Flask app with the input URL
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `url=${encodeURIComponent(url)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the predicted label
+                let resultText = '';
+                if (data.predicted_label === 'Safe Website') {
+                    resultText = `Predicted label: ${data.predicted_label}`;
+                } else {
+                    resultText = `Predicted label: ${data.predicted_label} (not safe)`;
+                }
+                document.getElementById('result').innerText = resultText;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
